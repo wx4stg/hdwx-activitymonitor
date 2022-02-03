@@ -46,7 +46,7 @@ if __name__ == "__main__":
             ax.set_title("productID: "+dataFile.replace(".csv", "")+" productDescription: "+productDesc+" last heartbeat: "+str(data["lastReloadTime"].to_list()[-1]))
             ax.set_position([.05, .975-(i/numberOfPlots), .9, 0.69/numberOfPlots])
         fig.savefig(path.join(outDir, "status.png"))
-    allProductData = json.loads(requests.get("http://weather-dev.geos.tamu.edu/wx4stg/api/all-products.php").content)
+    allProductData = json.loads(requests.get("http://hdwx.tamu.edu/api/all-products.php").content)
     for productTypeData in allProductData:
         for productData in productTypeData["products"]:
             prodID = productData["productID"]
