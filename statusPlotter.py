@@ -55,9 +55,9 @@ if __name__ == "__main__":
             reloadTime = dt.strptime(str(reloadTimeInt), "%Y%m%d%H%M")
             productRuns = ""
             try:
-                productRuns = json.loads(requests.get("http://weather-dev.geos.tamu.edu/wx4stg/api/get-available-runtimes.php?productID="+str(prodID)).content)
+                productRuns = json.loads(requests.get("http://hdwx.tamu.edu/api/get-available-runtimes.php?productID="+str(prodID)).content)
             except Exception as e:
-                print("http://weather-dev.geos.tamu.edu/wx4stg/api/get-available-runtimes.php?productID="+str(prodID))
+                print("http://hdwx.tamu.edu/api/get-available-runtimes.php?productID="+str(prodID))
                 print(e)
                 continue
             if type(productRuns) == list and len(productRuns) > 0:
@@ -65,10 +65,10 @@ if __name__ == "__main__":
                 latestRunInit = dt.strptime(latestRunInitStr, "%Y%m%d%H%M")
                 timedelay = (currentTime - latestRunInit).total_seconds() / 60
                 try:
-                    latestRunData = json.loads(requests.get("http://weather-dev.geos.tamu.edu/wx4stg/api/get-run.php?productID="+str(prodID)+"&runtime="+latestRunInitStr).content)
+                    latestRunData = json.loads(requests.get("http://hdwx.tamu.edu/api/get-run.php?productID="+str(prodID)+"&runtime="+latestRunInitStr).content)
                     pctcomp = (latestRunData["availableFrameCount"] / latestRunData["totalFrameCount"])
                 except Exception as e:
-                    print("http://weather-dev.geos.tamu.edu/wx4stg/api/get-run.php?productID="+str(prodID)+"&runtime="+latestRunInitStr)
+                    print("http://hdwx.tamu.edu/api/get-run.php?productID="+str(prodID)+"&runtime="+latestRunInitStr)
                     print(e)
                     continue
             else:
