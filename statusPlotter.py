@@ -78,7 +78,7 @@ if __name__ == "__main__":
             productReloadTimes = pd.DataFrame()
             if path.exists(productcsvPath):
                 productReloadTimes = pd.read_csv(productcsvPath)
-                productReloadTimes = productReloadTimes.append(newRow, ignore_index=True)
+                productReloadTimes = pd.concat([productReloadTimes, newRow], ignore_index=True)
             else:
                 productReloadTimes = newRow.copy()
             productReloadTimes["pydatetimes"] = pd.to_datetime(productReloadTimes["pydatetimes"], format="%Y-%m-%d %H:%M:%S.%f", errors="coerce")
