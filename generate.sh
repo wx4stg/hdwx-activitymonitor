@@ -6,11 +6,7 @@ then
 else
     condaEnvName="HDWX"
 fi
-if [ -f ~/mambaforge/envs/$condaEnvName/bin/python3 ]
+if [ -f $condaRootPath/envs/$condaEnvName/bin/python3 ]
 then
-    ~/mambaforge/envs/$condaEnvName/bin/python3 statusPlotter.py
-fi
-if [ -f ~/miniconda3/envs/$condaEnvName/bin/python3 ]
-then
-    ~/miniconda3/envs/$condaEnvName/bin/python3 statusPlotter.py
+    $condaRootPath/envs/$condaEnvName/bin/python3 statusPlotter.py
 fi
