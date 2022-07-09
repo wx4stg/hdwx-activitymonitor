@@ -24,28 +24,9 @@ def set_size(w, h, ax=None):
 if __name__ == "__main__":
     currentTime = dt.utcnow()
     basePath = path.abspath(path.dirname(__file__))
-    dataDir = path.join(basePath, "data")
+    dataDir = path.join(basePath, "output", "statusdata")
     Path(dataDir).mkdir(parents=True, exist_ok=True)
-    outDir = path.join(basePath, "output")
-    Path(outDir).mkdir(parents=True, exist_ok=True)
     numberOfPlots = len(listdir(dataDir))
-    if numberOfPlots > 0:    
-        fig = plt.figure()
-        px = 1/plt.rcParams["figure.dpi"]
-        fig.set_size_inches(1920*px, 2*100*numberOfPlots*px)
-        gs = GridSpec(numberOfPlots, 1, figure=fig)
-        for i in range(numberOfPlots):
-            ax = fig.add_subplot(gs[i, 0])
-            dataFile = sorted(listdir(dataDir))[i]
-            data = pd.read_csv(path.join(dataDir, dataFile))
-            data["pydatetimes"] = pd.to_datetime(data["pydatetimes"], format="%Y-%m-%d %H:%M:%S.%f", errors="coerce")
-            ax.plot(data["pydatetimes"], 100*data["complete"], "green")
-            ax.set_xlim(currentTime - timedelta(days=1), currentTime)
-            ax.set_ylim(0, 100)
-            productDesc = data["productDescription"].to_list()[-1]
-            ax.set_title("productID: "+dataFile.replace(".csv", "")+" productDescription: "+productDesc+" last heartbeat: "+str(data["lastReloadTime"].to_list()[-1]))
-            ax.set_position([.05, .975-(i/numberOfPlots), .9, 0.69/numberOfPlots])
-        fig.savefig(path.join(outDir, "status.png"))
     allProductData = json.loads(requests.get("http://hdwx.tamu.edu/api/all-products.php").content)
     for productTypeData in allProductData:
         for productData in productTypeData["products"]:
